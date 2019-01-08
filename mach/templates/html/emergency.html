@@ -52,7 +52,8 @@
                 </div>
             </div>
             <div class="col-sm-9">
-                <div class="list-group shadow-sm p-3 mb-2 bg-light rounded border border-secondary">
+                <form method="post" class="list-group shadow-sm p-3 mb-2 bg-light rounded border border-secondary">
+                <input type="hidden" name="user" value="1">
                     <h5 class="h5 mb-3 font-weight-bold">Форма обратной связи при ЧП</h5>
 
                     <h6 class="h6 font-weight-bold">Выберите просишествие из списка:</h6>
@@ -61,7 +62,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm">
-                                <select class="form-control form-control-sm" id="FormControlSelect1">
+                                <select class="form-control form-control-sm" id="FormControlSelect1" name="text">
                                     {% for option in options %}
                                     <option>{{ option }}</option>
                                     {% endfor %}
@@ -73,7 +74,7 @@
                     <div class="container mb-3">
                         <div class="form-group row my-0">
                             <label class="label">Другое:</label>
-                            <textarea class="form-control form-control-sm" rows="1"></textarea>
+                            <textarea class="form-control form-control-sm" rows="1" name="other"></textarea>
                         </div>
                     </div>
 
@@ -82,7 +83,7 @@
 
                         <div class="form-group row">
                             <div class="col-sm">
-                                <select class="form-control form-control-sm" id="FormControlSelect1">
+                                <select class="form-control form-control-sm" id="FormControlSelect1" name="place">
                                     {% for id, name in places %}
                                         <option value="{{ id }}">{{ name }}</option>
                                     {% endfor %}
@@ -100,7 +101,7 @@
                     </div>
                     </div>
 
-                </div>
+                </form>
             </div>
 
          </div>
