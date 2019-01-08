@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    {% load static %}
+  </head>
+  <body>
+
+  <nav class="navbar navbar-expand navbar-dark bg-primary mb-4 py-0">
+      <a class="navbar-brand">
+          <img src="{% static "img/logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+      <a class=" text-white">АРМ машиниста</a>
+      <ul class="navbar-nav ml-auto">
+         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <small class="px-3 text-white">Машинист</small>
+            <form class="form-inline" action="">
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <small class="text-white">Абулкасимова Екатерина Константиновна</small>
+                    </a>
+                    <div class="dropdown-menu py-0 w-100" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item px-2" href="#"><small>Выйти</small></a>
+                    </div>
+                </div>
+            </form>
+         </div>
+      </ul>
+  </nav>
+
+  <div class="container mx-0 mw-100">
+
+        <div class="form-group row">
+            <div class="col-lg-12"></div>
+            <div class="col-lg-12"></div>
+        </div>
+
+         <div class="form-group row">
+            <div class="col-sm-3">
+                <div class="list-group shadow-sm p-3 mb-2 bg-light rounded border border-secondary">
+                    <h5 class="h5 mb-3 font-weight-bold">Личный кабинет</h5>
+                    <a href="{% url 'index' %}" class="list-group-item list-group-item-action active">Посмотреть расписание</a>
+                    <a href="{% url 'messages' %}" class="list-group-item list-group-item-action">Посмотреть сообщения</a>
+                    <a href="{% url 'changes' %}" class="list-group-item list-group-item-action">Запросить замену</a>
+                    <a href="{% url 'emergencies' %}" class="list-group-item list-group-item-action">Сообщить о ЧП</a>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <div class="shadow-sm p-3 mb-5 bg-light rounded border border-secondary">
+                    <h5 class="h5 mb-4 font-weight-bold">Расписание</h5>
+
+
+                    <div class="table-responsive">
+                    <table class="table table-bordered table-stripedmh-100">
+                      <thead>
+                        <tr class="bg-info">
+                            <th scope="col"><small><strong>День недели</strong></small></th>
+                            <th scope="col"><small><strong>Машинист</strong></small></th>
+                            <th scope="col"><small><strong>Нач.вр.</strong></small></th>
+                            <th scope="col"><small><strong>Нач.пункт.</strong></small></th>
+                            <th scope="col"><small><strong>Конеч.вр.</strong></small></th>
+                            <th scope="col"><small><strong>Конеч.пункт</strong></small></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for schedule in schedules %}
+                        <tr>
+                            {% for item in schedule %}
+                            <td><small>{{ item }}</small></td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+         </div>
+
+  </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  </body>
+</html>
+
