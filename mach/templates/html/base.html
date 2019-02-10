@@ -1,94 +1,279 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     {% load static %}
-  </head>
-  <body>
 
-  <nav class="navbar navbar-expand navbar-dark bg-primary mb-4 py-0">
-      <a class="navbar-brand">
-          <img src="{% static "img/logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
-      <a class=" text-white">АРМ машиниста</a>
-      <ul class="navbar-nav ml-auto">
-         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <small class="px-3 text-white">Машинист</small>
+    <style>
+    svg g {
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+      user-select: none;          /* Likely future */
+    }
+        .js-toggle {
+            transform: translateY(-2px);
+        }
+        .js-toggle:active {
+            opacity: .5;
+            transform: translateY(4px);
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-dark bg-primary mb-4 py-0">
+    <a class="navbar-brand">
+        <img src="{% static "img/logo.png" %}" width="30" height="30" class="d-inline-block align-top" alt=""></a>
+    <a class=" text-white">АРМ машиниста</a>
+    <ul class="navbar-nav ml-auto">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <small class="px-3 text-white">Машинист</small>
             <form class="form-inline" action="">
                 <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <small class="text-white">Абулкасимова Екатерина Константиновна</small>
                     </a>
                     <div class="dropdown-menu py-0 w-100" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item px-2" href="#"><small>Выйти</small></a>
+                        <a class="dropdown-item px-2" href="#">
+                            <small>Выйти</small>
+                        </a>
                     </div>
                 </div>
             </form>
-         </div>
-      </ul>
-  </nav>
+        </div>
+    </ul>
+</nav>
 
-  <div class="container mx-0 mw-100">
+<div class="container mx-0 mw-100">
 
-        <div class="form-group row">
-            <div class="col-lg-12"></div>
-            <div class="col-lg-12"></div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 text-center text-info mb-4 mt-4">
+            <span id="machinist-message"></span>
         </div>
 
-         <div class="form-group row">
-            <div class="col-sm-3">
-                <div class="list-group shadow-sm p-3 mb-2 bg-light rounded border border-secondary">
-                    <h5 class="h5 mb-3 font-weight-bold">Личный кабинет</h5>
-                    <a href="{% url 'index' %}" class="list-group-item list-group-item-action active">Посмотреть расписание</a>
-                    <a href="{% url 'messages' %}" class="list-group-item list-group-item-action">Посмотреть сообщения</a>
-                    <a href="{% url 'changes' %}" class="list-group-item list-group-item-action">Запросить замену</a>
-                    <a href="{% url 'emergencies' %}" class="list-group-item list-group-item-action">Сообщить о ЧП</a>
-                </div>
+        <div class="col-lg-12 col-md-12">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
+                 width="741px" height="221px" viewBox="-0.5 -0.5 741 221"
+                 content="&lt;mxfile modified=&quot;2019-02-09T17:57:27.153Z&quot; host=&quot;www.draw.io&quot; agent=&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 OPR/57.0.3098.116&quot; etag=&quot;voSuNCdz1ySv5IiVkXj2&quot; version=&quot;10.2.1&quot; type=&quot;google&quot;&gt;&lt;diagram id=&quot;lFhESoVgCa_HjoJMXMz2&quot; name=&quot;Page-1&quot;&gt;7VrRbpswFP2aPHbCNhh4TFhYHzZpUibtmQUX0BxMCWnSff0MmGCI01ANJ0RdKlG41zjm3HN87UtmyNscvuRBFn9jIaEzaISHGfo8g9BBkB9Lw2ttMLFTG6I8CWsTaA2r5A8RRkNYd0lItp2GBWO0SLKucc3SlKyLji3Ic7bvNntitPutWRCRE8NqHdBT688kLGLxWNBu7Y8kieLmmwF2a88maBqLJ9nGQcj2kgktZ8jLGSvqs83BI7TErsGlvs8/4z0OLCdpMeSGVeSl5p/HH9+ZlQdftw+HZ/DyIHp5CehOPLAYbPHaIJCzXRqSshMwQ4t9nBRklQXr0rvnIee2uNhQ4X5KKPUYZXl1L/L9JfY8bhdfQ/KCHM6OHxxR4WwibEOK/JU3aW5wBZCCSaABdt/GxTaFLZZicoxAILgQHftu4eInArH3oGdchi/i+GU9ZFKWkrdAEWQOfjWdGO8Hy/5kdeHCp3A5CrQcXWA5l7HivXBdk8s0C7ZZLfan5FBSs887r/pw+7bI2e+jcsFQJr4R7VPIbwWoe0VAfX+BMNYCn+imz9fjtQQvtk7hbWzjixsOFbc+GSPYm/NuLWKA7l7FcFoqBuYVEXWM8k8LfpOVMb69jE1zajK2717GeGIyvubyxvcR/2jBb7IyHrDa0S1jC09Mxs0j3LGM3WnJGA7YEI+GqGF43r8uqs/gN1UZwwGrnbbgYFzG+JSM52g7COS3JwBodCcAaClKEFDBV0sbXy0FnpgWJQ6MP5QMLH7escbxsK0qbXPeAJjZoXXys6j6z8F3UXU0qqPd9MvHWXctGvbDx+EtVDHqFT8U9ZCAJlHKL9c8HITbF2WwknVA58KxScKQnhNelzblEFdiUMYYoQd9LUHF7K8sP2mLvSoljhX7OayivqzOawZ4reWjswH1FvQ35wJSrQRGmwdAdVxI8Z9XR0diR22HkpcPqXaZksuSbqnOXfdjU8mEaMDEAprCi8wmpCtLNy9t9LDJlrLKvKXDXJ53HEGQ/wwasC0xJ8igAes83ds17IAOKjffriHVYu2utmt1WKezXUMDinujIVp+fF8LflPdriFVnXC0RLCUJvyxEoEhLVWstrHo0/rYmQLj7oyozBOq/au+PDGgbKo7TzhgYm/K0TXf7OrJE8608oSp2h7pQtT3y/q8FvymmidMVdn0DvKEL7mMe88WIyQI271c1wBonATBL9sfv1U+6ReEaPkX&lt;/diagram&gt;&lt;/mxfile&gt;"
+                 style="background-color: rgb(255, 255, 255);margin: 0 auto;display: block;">
+                <defs/>
+                <g>
+                    <rect x="0" y="0" width="740" height="220" rx="33" ry="33" fill="#ffe6cc" stroke="#000000"
+                          pointer-events="none"/>
+                    <ellipse cx="48" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Поехали" cx="48" cy="80" rx="32.5" ry="32.5" fill="#ffb366" stroke="#000000" pointer-events="none"/>
+                    <ellipse cx="170" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Тормозим" cx="170" cy="80" rx="32.5" ry="32.5" fill="#808080" stroke="#000000"
+                             pointer-events="none"/>
+                    <ellipse cx="290" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Двери заблокированы" cx="290" cy="80" rx="32.5" ry="32.5" fill="#ff3333" stroke="#000000"
+                             pointer-events="none"/>
+                    <ellipse cx="410" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Двери закрываются" cx="410" cy="80" rx="32.5" ry="32.5" fill="#00cc66" stroke="#000000"
+                             pointer-events="none"/>
+                    <rect x="10" y="130" width="720" height="50" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <g transform="translate(35.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="24" height="14"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 26px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">ГАЗ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="12" y="13" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                    <g transform="translate(139.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="60" height="14"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 60px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">ТОРМОЗ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="30" y="13" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                    <g transform="translate(234.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="111" height="30"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 111px; white-space: normal; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">БЛОКИРОВКА ДВЕРЕЙ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="56" y="21" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                    <g transform="translate(354.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="111" height="30"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 111px; white-space: normal; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">ЗАКРЫТИЕ ДВЕРЕЙ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="56" y="21" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                    <ellipse cx="531" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Левые двери открываются" cx="531" cy="80" rx="32.5" ry="32.5" fill="#3333ff" stroke="#000000"
+                             pointer-events="none"/>
+                    <g transform="translate(471.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="118" height="30"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 118px; white-space: normal; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">ОТКРЫТИЕ ДВЕРЕЙ ЛЕВЫХ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="59" y="21" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                    <ellipse cx="665" cy="80" rx="40" ry="40" fill="#cccccc" stroke="#000000" pointer-events="none"/>
+                    <ellipse style="pointer-events: all;" class="js-toggle" data-isRed="true" data-messageOn="Правые двери закрываются" cx="665" cy="80" rx="32.5" ry="32.5" fill="#ffff33" stroke="#000000"
+                             pointer-events="none"/>
+                    <g transform="translate(600.5,142.5)">
+                        <switch>
+                            <foreignObject style="overflow:visible;" pointer-events="all" width="128" height="30"
+                                           requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                                <div xmlns="http://www.w3.org/1999/xhtml"
+                                     style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 128px; white-space: normal; overflow-wrap: normal; text-align: center;">
+                                    <div xmlns="http://www.w3.org/1999/xhtml"
+                                         style="display:inline-block;text-align:inherit;text-decoration:inherit;"><font
+                                            style="font-size: 14px">ОТКРЫТИЕ ДВЕРЕЙ ПРАВЫХ</font></div>
+                                </div>
+                            </foreignObject>
+                            <text x="64" y="21" fill="#000000" text-anchor="middle" font-size="12px"
+                                  font-family="Helvetica">[Not supported by viewer]
+                            </text>
+                        </switch>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+
+    <div class="form-group row mt-5">
+        <div class="col-sm-3">
+            <div class="list-group shadow-sm p-3 mb-2 bg-light rounded border border-secondary">
+                <h5 class="h5 mb-3 font-weight-bold">Личный кабинет</h5>
+                <a href="{% url 'index' %}" class="list-group-item list-group-item-action active">Посмотреть
+                    расписание</a>
+                <a href="{% url 'messages' %}" class="list-group-item list-group-item-action">Посмотреть сообщения</a>
+                <a href="{% url 'changes' %}" class="list-group-item list-group-item-action">Запросить замену</a>
+                <a href="{% url 'emergencies' %}" class="list-group-item list-group-item-action">Сообщить о ЧП</a>
             </div>
+        </div>
 
-            <div class="col-sm-9">
-                <div class="shadow-sm p-3 mb-5 bg-light rounded border border-secondary">
-                    <h5 class="h5 mb-4 font-weight-bold">Расписание</h5>
+        <div class="col-sm-9">
+            <div class="shadow-sm p-3 mb-5 bg-light rounded border border-secondary">
+                <h5 class="h5 mb-4 font-weight-bold">Расписание</h5>
 
 
-                    <div class="table-responsive">
+                <div class="table-responsive">
                     <table class="table table-bordered table-stripedmh-100">
-                      <thead>
+                        <thead>
                         <tr class="bg-info">
-                            <th scope="col"><small><strong>День недели</strong></small></th>
-                            <th scope="col"><small><strong>Машинист</strong></small></th>
-                            <th scope="col"><small><strong>Нач.вр.</strong></small></th>
-                            <th scope="col"><small><strong>Нач.пункт.</strong></small></th>
-                            <th scope="col"><small><strong>Конеч.вр.</strong></small></th>
-                            <th scope="col"><small><strong>Конеч.пункт</strong></small></th>
+                            <th scope="col">
+                                <small><strong>День недели</strong></small>
+                            </th>
+                            <th scope="col">
+                                <small><strong>Машинист</strong></small>
+                            </th>
+                            <th scope="col">
+                                <small><strong>Нач.вр.</strong></small>
+                            </th>
+                            <th scope="col">
+                                <small><strong>Нач.пункт.</strong></small>
+                            </th>
+                            <th scope="col">
+                                <small><strong>Конеч.вр.</strong></small>
+                            </th>
+                            <th scope="col">
+                                <small><strong>Конеч.пункт</strong></small>
+                            </th>
                         </tr>
-                      </thead>
-                      <tbody>
+                        </thead>
+                        <tbody>
                         {% for schedule in schedules %}
-                        <tr>
-                            {% for item in schedule %}
-                            <td><small>{{ item }}</small></td>
-                            {% endfor %}
-                        </tr>
+                            <tr>
+                                {% for item in schedule %}
+                                    <td>
+                                        <small>{{ item }}</small>
+                                    </td>
+                                {% endfor %}
+                            </tr>
                         {% endfor %}
-                      </tbody>
+                        </tbody>
                     </table>
-                    </div>
                 </div>
             </div>
-         </div>
+        </div>
+    </div>
 
-  </div>
+</div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-  </body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+
+<script type="text/ecmascript">
+    $(document).ready(function() {
+        console.warn('ready');
+        console.warn($('.js-toggle'));
+        $('.js-toggle').click(function() {
+            toggle(this);
+        });
+    });
+
+
+    function toggle(lamp) {
+        $('#machinist-message').text($(lamp).data('messageon'));
+    }
+    </script>
+</body>
 </html>
 
