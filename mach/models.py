@@ -13,7 +13,33 @@ class PlacesGateway:
         ''')
         return connection.fetchall()
 
+
 class UserGateway:
+    ROW_COLUMNS = [
+        'id',
+        'first_name',
+        'last_name',
+        'username',
+        'password'
+    ]
+
+    @classmethod
+    def get_by_username(cls, username, connection):
+        connection.execute('''
+        SELECT 
+            user.id,
+            user.first_name,
+            user.last_name,
+            user.username,
+            user.password
+        FROM user
+        WHERE user.username = ?
+        ''', (username, ))
+
+        User = namedtuple('User', cls.ROW_COLUMNS)
+        row = connection.fetchone()
+        return User(*row)
+
     def get_by_ids(self, ids: list):
         pass
 

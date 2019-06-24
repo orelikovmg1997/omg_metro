@@ -16,14 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from mach.views import schedule_view, message_view, change_list_view, \
-    emergency_list_view
+from mach import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', schedule_view, name='index'),
-    path('messages', message_view, name='messages'),
-    path('changes', change_list_view, name='changes'),
-    path('emergencies', emergency_list_view, name='emergencies'),
+    path('', views.schedule_view, name='index'),
+    path('login', views.login_view, name='login'),
+    path('logout', views.logout_view, name='logout'),
+    path('messages', views.message_view, name='messages'),
+    path('changes', views.change_list_view, name='changes'),
+    path('emergencies', views.emergency_list_view, name='emergencies'),
 
 ]

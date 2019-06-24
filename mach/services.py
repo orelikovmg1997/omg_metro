@@ -1,7 +1,12 @@
-from mach.models import ScheduleGateway, MessageGateway, PlacesGateway
+from mach.models import ScheduleGateway, MessageGateway, PlacesGateway, \
+    UserGateway
 
 
 class ServiceLayer:
+    @classmethod
+    def get_by_username(cls, *args, **kwargs):
+        return UserGateway.get_by_username(*args, **kwargs)
+
     @classmethod
     def get_all_messages(cls, *args, **kwargs):
         return MessageGateway.get_last_10(*args, **kwargs)
