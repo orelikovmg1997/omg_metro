@@ -9,10 +9,12 @@ from machinist.settings import SQLITE
 
 def login_required(func):
     def wrapped(request, *args, **kwargs):
-        if request.session.get('user_id') is None:
+        user_id = request.session.get('user_id')
+        if user_id is None:
             return redirect('login')
 
-        return func(request, *args, **kwargs)
+        current_user = ServiceLayer.get_by_id(user_id, connection=kwargs['cur'])
+        return func(request, *args, current_user=current_user, **kwargs)
 
     return wrapped
 
@@ -20,8 +22,11 @@ def login_required(func):
 def database_connection(func):
     def wrapped(request, *args, **kwargs):
         with closing(sqlite3.connect(SQLITE)) as connection:
-            with closing(connection.cursor()) as cur:
-                return func(request, *args, cur=cur, **kwargs)
+            cur = connection.cursor()
+            response = func(request, *args, cur=cur, **kwargs)
+            cur.close()
+            connection.commit()
+            return response
 
     return wrapped
 
@@ -54,30 +59,32 @@ def logout_view(request, *args, **kwargs):
     return redirect('login')
 
 
-@login_required
 @database_connection
-def schedule_view(request, cur=None):
+@login_required
+def schedule_view(request, cur=None, current_user=None):
     schedules = ServiceLayer.get_all_schedules(connection=cur)
     context = {
+        'user': current_user,
         'schedules': list(schedules)
     }
 
-    return render_to_response('html/base.html', context)
+    return render_to_response('html/index.html', context)
 
 
-@login_required
 @database_connection
-def message_view(request, cur=None):
+@login_required
+def message_view(request, cur=None, current_user=None):
     messages = list(ServiceLayer.get_all_messages(connection=cur))
     context = {
+        'user': current_user,
         'messages': messages
     }
     return render_to_response('html/message.html', context)
 
 
-@login_required
 @database_connection
-def change_list_view(request, cur=None):
+@login_required
+def change_list_view(request, cur=None, current_user=None):
 
     options = [
         'Плохое самочувствие',
@@ -91,20 +98,25 @@ def change_list_view(request, cur=None):
     points = list(ServiceLayer.get_all_places(connection=cur))
 
     if request.method == 'GET':
-        return render_to_response('html/change.html', {'options': options, 'places': points})
+        context = {
+            'user': current_user,
+            'options': options,
+            'places': points
+        }
+        return render_to_response('html/change.html', context)
 
     other = request.POST.get('other')
     text = other or request.POST.get('text')
-    sender = request.POST.get('user')
+    sender = current_user.id
     place = request.POST.get('place')
     ServiceLayer.create_new_message(sender, text, place, connection=cur)
 
     return redirect('messages')
 
 
-@login_required
 @database_connection
-def emergency_list_view(request, cur=None):
+@login_required
+def emergency_list_view(request, cur=None, current_user=None):
     options = [
         'Состав вышел из строя',
         'Падение напряжения',
@@ -118,12 +130,16 @@ def emergency_list_view(request, cur=None):
     points = list(ServiceLayer.get_all_places(connection=cur))
 
     if request.method == 'GET':
-        return render_to_response('html/emergency.html',
-                                  {'options': options, 'places': points})
+        context = {
+            'user': current_user,
+            'options': options,
+            'places': points
+        }
+        return render_to_response('html/emergency.html', context)
 
     other = request.POST.get('other')
     text = other or request.POST.get('text')
-    sender = request.POST.get('user')
+    sender = current_user.id
     place = request.POST.get('place')
     ServiceLayer.create_new_message(sender, text, place, connection=cur)
     return redirect('messages')

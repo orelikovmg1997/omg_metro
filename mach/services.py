@@ -8,6 +8,10 @@ class ServiceLayer:
         return UserGateway.get_by_username(*args, **kwargs)
 
     @classmethod
+    def get_by_id(cls, *args, **kwargs):
+        return UserGateway.get_by_id(*args, **kwargs)
+
+    @classmethod
     def get_all_messages(cls, *args, **kwargs):
         return MessageGateway.get_last_10(*args, **kwargs)
 

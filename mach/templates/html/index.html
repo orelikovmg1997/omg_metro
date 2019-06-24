@@ -1,1 +1,36 @@
 {% extends "html/base.html" %}
+
+{% block js %}
+<script type="text/ecmascript">
+    $(document).ready(function() {
+        console.warn('ready');
+        console.warn($('.js-toggle'));
+        $('.js-toggle').click(function() {
+            toggle(this);
+        });
+    });
+
+
+    function toggle(lamp) {
+        $('#machinist-message').text($(lamp).data('messageon'));
+    }
+</script>
+{% endblock %}
+
+{% block css %}
+<style>
+    svg g {
+      -webkit-user-select: none;  /* Chrome all / Safari all */
+      -moz-user-select: none;     /* Firefox all */
+      -ms-user-select: none;      /* IE 10+ */
+      user-select: none;          /* Likely future */
+    }
+    .js-toggle {
+        transform: translateY(-2px);
+    }
+    .js-toggle:active {
+        opacity: .5;
+        transform: translateY(4px);
+    }
+</style>
+{% endblock %}

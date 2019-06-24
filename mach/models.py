@@ -20,8 +20,10 @@ class UserGateway:
         'first_name',
         'last_name',
         'username',
-        'password'
+        'password',
     ]
+
+    User = namedtuple('User', ROW_COLUMNS)
 
     @classmethod
     def get_by_username(cls, username, connection):
@@ -36,9 +38,24 @@ class UserGateway:
         WHERE user.username = ?
         ''', (username, ))
 
-        User = namedtuple('User', cls.ROW_COLUMNS)
         row = connection.fetchone()
-        return User(*row)
+        return cls.User(*row)
+
+    @classmethod
+    def get_by_id(cls, id, connection):
+        connection.execute('''
+        SELECT
+            user.id,
+            user.first_name,
+            user.last_name,
+            user.username,
+            user.password
+        FROM user
+        WHERE user.id = ?
+        ''', (id, ))
+
+        row = connection.fetchone()
+        return cls.User(*row)
 
     def get_by_ids(self, ids: list):
         pass
