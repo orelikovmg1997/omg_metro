@@ -27,5 +27,5 @@ urlpatterns = [
     path('messages', views.message_view, name='messages'),
     path('changes', views.change_list_view, name='changes'),
     path('emergencies', views.emergency_list_view, name='emergencies'),
-
+    path('panel_log', views.actions_log, name='panel_log'),
 ]

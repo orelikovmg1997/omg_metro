@@ -128,3 +128,17 @@ class ScheduleGateway:
             yield sch
 
 
+class PanelActivityLog:
+    ROW_COLUMNS = [
+        'id',
+        'machinist_id',
+        'date',
+        'description'
+    ]
+
+    @classmethod
+    def insert_one(cls, machinist_id, date, description, connection):
+        connection.execute('''
+            INSERT INTO panel_activity(machinist_id, date, description)
+            VALUES (?, ?, ?) 
+        ''', (machinist_id, date, description))

@@ -1,5 +1,5 @@
 from mach.models import ScheduleGateway, MessageGateway, PlacesGateway, \
-    UserGateway
+    UserGateway, PanelActivityLog
 
 
 class ServiceLayer:
@@ -26,3 +26,7 @@ class ServiceLayer:
     @classmethod
     def get_all_schedules(cls, *args, **kwargs):
         return ScheduleGateway.get_current(*args, **kwargs)
+
+    @classmethod
+    def insert_panel_activity(cls, *args, **kwargs):
+        return PanelActivityLog.insert_one(*args, **kwargs)

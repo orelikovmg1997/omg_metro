@@ -13,6 +13,13 @@
 
     function toggle(lamp) {
         $('#machinist-message').text($(lamp).data('messageon'));
+        $.ajax({
+            url: '/panel_log',
+            method: 'post',
+            data: {
+                message: $(lamp).data('messageon')
+            }
+        });
     }
 </script>
 {% endblock %}

@@ -1,6 +1,8 @@
+import datetime
 import sqlite3
 from contextlib import closing
 
+from django.http import HttpResponse
 from django.shortcuts import render_to_response, redirect
 
 from mach.services import ServiceLayer
@@ -143,3 +145,16 @@ def emergency_list_view(request, cur=None, current_user=None):
     place = request.POST.get('place')
     ServiceLayer.create_new_message(sender, text, place, connection=cur)
     return redirect('messages')
+
+
+@database_connection
+@login_required
+def actions_log(request, cur=None, current_user=None):
+    if request.method == "POST":
+        ServiceLayer.insert_panel_activity(
+            current_user.id,
+            datetime.datetime.now(),
+            description=request.POST.get('message'),
+            connection=cur
+        )
+    return HttpResponse()
